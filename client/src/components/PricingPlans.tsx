@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import ContactModal from './ContactModal';
 
 const plans = [
   {
@@ -54,6 +55,7 @@ const plans = [
 
 export default function PricingPlans() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const element = containerRef.current;
@@ -151,13 +153,19 @@ export default function PricingPlans() {
               </p>
 
               {/* CTA */}
-              <button className="cta-button w-full">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="cta-button w-full"
+              >
                 Comenzar ahora
               </button>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Contact Modal */}
+      <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

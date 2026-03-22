@@ -3,6 +3,8 @@ import StatsBar from '@/components/StatsBar';
 import ValueAudit from '@/components/ValueAudit';
 import Installation from '@/components/Installation';
 import PricingPlans from '@/components/PricingPlans';
+import SocialProof from '@/components/SocialProof';
+import Testimonials from '@/components/Testimonials';
 import FreeTrial from '@/components/FreeTrial';
 import FinalCTA from '@/components/FinalCTA';
 import Footer from '@/components/Footer';
@@ -29,6 +31,8 @@ export default function Home() {
       <ValueAudit />
       <Installation />
       <PricingPlans />
+      <SocialProof />
+      <Testimonials />
       <FreeTrial />
       <FinalCTA />
       <Footer />

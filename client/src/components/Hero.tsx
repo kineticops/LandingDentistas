@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import ContactModal from './ContactModal';
 
 export default function Hero() {
   // Design Philosophy: Minimalist, Tesla/Apple-inspired dark mode
@@ -7,6 +8,7 @@ export default function Hero() {
   // - Red accent (#e82127) for critical CTAs
   // - Subtle grid background for depth without clutter
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const element = containerRef.current;
@@ -61,9 +63,15 @@ export default function Hero() {
         </p>
 
         {/* CTA Button */}
-        <button className="cta-button text-lg md:text-xl px-8 md:px-12 py-4 md:py-5">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="cta-button text-lg md:text-xl px-8 md:px-12 py-4 md:py-5"
+        >
           Agendar llamada gratuita
         </button>
+
+        {/* Contact Modal */}
+        <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
         {/* Scroll indicator */}
         <div className="mt-20 flex flex-col items-center gap-3 animate-bounce">

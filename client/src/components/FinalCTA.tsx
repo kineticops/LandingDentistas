@@ -1,7 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import ContactModal from './ContactModal';
 
 export default function FinalCTA() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const element = containerRef.current;
@@ -33,9 +35,15 @@ export default function FinalCTA() {
           15 minutos. Sin compromiso. Solo una conversación estratégica sobre lo que necesita su clínica.
         </p>
 
-        <button className="cta-button text-lg md:text-xl px-8 md:px-12 py-4 md:py-5 mb-6">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="cta-button text-lg md:text-xl px-8 md:px-12 py-4 md:py-5 mb-6"
+        >
           Agendar llamada gratuita
         </button>
+
+        {/* Contact Modal */}
+        <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
         <p className="text-xs uppercase tracking-widest text-[#636366]">
           Sin coste · Sin compromiso · 15 minutos
