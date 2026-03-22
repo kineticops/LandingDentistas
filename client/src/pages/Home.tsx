@@ -2,6 +2,7 @@ import Hero from '@/components/Hero';
 import StatsBar from '@/components/StatsBar';
 import ValueAudit from '@/components/ValueAudit';
 import Installation from '@/components/Installation';
+import TierResults from '@/components/TierResults';
 import PricingPlans from '@/components/PricingPlans';
 import SocialProof from '@/components/SocialProof';
 import Testimonials from '@/components/Testimonials';
@@ -30,6 +31,7 @@ export default function Home() {
       <StatsBar />
       <ValueAudit />
       <Installation />
+      <TierResults />
       <PricingPlans />
       <SocialProof />
       <Testimonials />

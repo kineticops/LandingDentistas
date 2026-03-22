@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function SocialProof() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [count, setCount] = useState(0);
   const targetCount = 150;
 
   useEffect(() => {
@@ -11,19 +10,8 @@ export default function SocialProof() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && count === 0) {
-          // Animate counter
-          let current = 0;
-          const increment = Math.ceil(targetCount / 30);
-          const interval = setInterval(() => {
-            current += increment;
-            if (current >= targetCount) {
-              setCount(targetCount);
-              clearInterval(interval);
-            } else {
-              setCount(current);
-            }
-          }, 30);
+        if (entry.isIntersecting) {
+          element.classList.add('visible');
         }
       },
       { threshold: 0.1 }
@@ -31,7 +19,7 @@ export default function SocialProof() {
 
     observer.observe(element);
     return () => observer.unobserve(element);
-  }, [count]);
+  }, []);
 
   return (
     <section ref={containerRef} className="scroll-reveal py-12 md:py-16 px-4 border-y border-[rgba(255,255,255,0.07)]">
@@ -39,9 +27,9 @@ export default function SocialProof() {
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
           <div>
             <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-5xl md:text-6xl font-bold text-[#e82127]">
-              +{count}
+              +{targetCount}
             </p>
-            <p className="text-[#b0b0b5] text-base md:text-lg mt-2">
+            <p className="text-[#a0a0a5] text-base md:text-lg mt-2">
               clínicas confían en Kinetic Ops
             </p>
           </div>
@@ -50,7 +38,7 @@ export default function SocialProof() {
             <p className="text-[#34c759] font-semibold text-lg">
               +2.500 horas recuperadas
             </p>
-            <p className="text-[#b0b0b5] text-sm">
+            <p className="text-[#a0a0a5] text-sm">
               en gestión administrativa
             </p>
           </div>

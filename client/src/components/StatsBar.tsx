@@ -44,7 +44,7 @@ export default function StatsBar() {
               <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#e82127] mb-3">
                 {stat.number}
               </div>
-              <p className="text-[#b0b0b5] text-base md:text-lg leading-relaxed">
+              <p className="text-[#a0a0a5] text-base md:text-lg leading-relaxed">
                 {stat.text}
               </p>
             </div>

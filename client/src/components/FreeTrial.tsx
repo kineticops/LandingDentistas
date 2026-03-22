@@ -40,7 +40,7 @@ export default function FreeTrial() {
   }, []);
 
   return (
-    <section ref={containerRef} className="scroll-reveal py-20 md:py-32 px-4 bg-black">
+    <section ref={containerRef} className="scroll-reveal py-12 md:py-20 px-4 bg-black">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-16 md:mb-24 text-center">
@@ -50,7 +50,7 @@ export default function FreeTrial() {
             <br />
             Resultados reales.
           </h2>
-          <p className="text-lg text-[#b0b0b5] max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-[#a0a0a5] max-w-2xl mx-auto leading-relaxed">
             Instalamos todo el sistema de su plan.
             <br />
             Si en una semana no ve impacto con sus propios datos, desinstalamos sin coste.
@@ -67,7 +67,7 @@ export default function FreeTrial() {
               <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-xl font-semibold mb-3">
                 {benefit.title}
               </h3>
-              <p className="text-[#b0b0b5] leading-relaxed">
+              <p className="text-[#a0a0a5] leading-relaxed">
                 {benefit.description}
               </p>
             </div>

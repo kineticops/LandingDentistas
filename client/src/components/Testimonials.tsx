@@ -42,7 +42,7 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section ref={containerRef} className="scroll-reveal py-20 md:py-32 px-4 bg-black">
+    <section ref={containerRef} className="scroll-reveal py-12 md:py-20 px-4 bg-black">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-16 md:mb-24 text-center">

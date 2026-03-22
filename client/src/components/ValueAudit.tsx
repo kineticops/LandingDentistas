@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import AnimatedCounter from './AnimatedCounter';
 
 const systems = [
   {
@@ -60,7 +59,7 @@ export default function ValueAudit() {
   }, []);
 
   return (
-    <section ref={containerRef} className="scroll-reveal py-20 md:py-32 px-4">
+    <section ref={containerRef} className="scroll-reveal py-12 md:py-16 px-4 bg-[#0a0a0a]">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-16 md:mb-24">
@@ -70,7 +69,7 @@ export default function ValueAudit() {
             <br />
             entre 80€ y 300€.
           </h2>
-          <p className="text-lg text-[#b0b0b5] max-w-2xl">
+          <p className="text-lg text-[#a0a0a5] max-w-2xl">
             Cada sistema se valora por su impacto directo en su facturación mensual.
           </p>
         </div>
@@ -92,13 +91,13 @@ export default function ValueAudit() {
                   <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-xl md:text-2xl font-semibold mb-3">
                     {system.name}
                   </h3>
-                  <p className="text-[#b0b0b5] leading-relaxed">
+                  <p className="text-[#a0a0a5] leading-relaxed">
                     {system.description}
                   </p>
                 </div>
                 <div className="flex-shrink-0 md:text-right">
                   <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-2xl md:text-3xl font-bold text-[#e82127]">
-                    <AnimatedCounter value={parseInt(system.value)} prefix="" suffix="€/mes" />
+                    {system.value}
                   </p>
                 </div>
               </div>

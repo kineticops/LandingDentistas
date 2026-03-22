@@ -6,7 +6,7 @@ export default function Footer() {
           KINETIC OPS
         </p>
         <p className="text-[#636366] text-xs">
-          Documento confidencial · 2026
+          Todos los derechos reservados · 2026
         </p>
       </div>
     </footer>

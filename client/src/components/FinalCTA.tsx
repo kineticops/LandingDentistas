@@ -23,7 +23,7 @@ export default function FinalCTA() {
   }, []);
 
   return (
-    <section ref={containerRef} className="scroll-reveal py-20 md:py-32 px-4">
+    <section ref={containerRef} className="scroll-reveal py-12 md:py-20 px-4">
       <div className="max-w-4xl mx-auto text-center">
         <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-4xl md:text-6xl font-bold leading-tight mb-6">
           Mientras otros gestionan,
@@ -31,7 +31,7 @@ export default function FinalCTA() {
           usted <span className="text-[#e82127]">lidera</span>.
         </h2>
 
-        <p className="text-lg md:text-xl text-[#b0b0b5] max-w-2xl mx-auto mb-12">
+        <p className="text-lg md:text-xl text-[#a0a0a5] max-w-2xl mx-auto mb-12">
           15 minutos. Sin compromiso. Solo una conversación estratégica sobre lo que necesita su clínica.
         </p>
 

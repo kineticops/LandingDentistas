@@ -195,28 +195,7 @@
     }
   }
 
-  /* Gradient flow animation */
-  @keyframes gradientFlow {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
 
-  /* Border gradient animation */
-  @keyframes borderGradientFlow {
-    0% {
-      filter: hue-rotate(0deg);
-    }
-    100% {
-      filter: hue-rotate(360deg);
-    }
-  }
 
   /* Scroll reveal animation */
   @keyframes fadeUp {
@@ -241,29 +220,18 @@
 
   /* Gradient text */
   .gradient-text {
-    background: linear-gradient(90deg, #e82127, #ffb74d, #34c759, #64b5f6, #e82127);
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradientFlow 3s ease infinite;
+    @apply text-[#e82127];
   }
 
   /* CTA Button styles */
   .cta-button {
     @apply px-8 py-3 rounded-full font-semibold text-base transition-all duration-300 ease-out;
-    @apply bg-[#e82127] text-white border-2;
+    @apply bg-[#e82127] text-white border-2 border-[#e82127];
     font-family: 'Plus Jakarta Sans', sans-serif;
-    background: linear-gradient(90deg, #e82127, #ffb74d, #34c759, #64b5f6, #e82127);
-    background-size: 200% 100%;
-    animation: gradientFlow 3s ease infinite;
-    border-image: linear-gradient(90deg, #e82127, #ffb74d, #34c759, #64b5f6, #e82127) 1;
-    border-image-slice: 1;
   }
 
   .cta-button:hover {
     @apply bg-transparent text-[#e82127];
-    background: transparent;
   }
 
   /* Tag styles */
@@ -292,19 +260,7 @@
     @apply inline-block px-3 py-1 rounded-full text-xs font-mono font-medium bg-[#34c759]/20 text-[#34c759];
   }
 
-  /* Counter animation */
-  @keyframes counterPulse {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.8;
-    }
-  }
 
-  .counter-number {
-    animation: counterPulse 0.5s ease-out;
-  }
 }
 
 

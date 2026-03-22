@@ -43,9 +43,9 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-5xl mx-auto text-center">
         {/* Brand */}
-        <div className="mb-12 flex items-center justify-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#e82127]"></div>
-          <span className="eyebrow text-[#b0b0b5]">KINETIC OPS</span>
+        <div className="mb-16 flex items-center justify-center gap-3">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#e82127]"></div>
+          <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-sm font-semibold tracking-wider text-[#f5f5f5]">KINETIC OPS</span>
         </div>
 
         {/* Main headline */}
@@ -56,7 +56,7 @@ export default function Hero() {
         </h1>
 
         {/* Subtitle */}
-        <p className="text-lg md:text-2xl text-[#b0b0b5] max-w-3xl mx-auto leading-relaxed mb-12">
+        <p className="text-lg md:text-xl text-[#a0a0a5] max-w-3xl mx-auto leading-relaxed mb-12">
           Sistemas de IA que trabajan por su clínica las 24 horas.
           <br />
           Para clínicas que no pueden permitirse perder ni un paciente más.

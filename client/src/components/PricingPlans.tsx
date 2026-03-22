@@ -1,55 +1,48 @@
 import { useEffect, useRef, useState } from 'react';
 import ContactModal from './ContactModal';
-import AnimatedCounter from './AnimatedCounter';
 
 const plans = [
   {
     name: 'Inicio',
-    description: 'Lo esencial: su clínica responde automáticamente a cada paciente, 24 horas, 7 días. Las preguntas nunca más se quedan sin respuesta.',
     originalPrice: '500€/mes',
     price: '59€/mes',
     savings: '441€/mes',
-    dailyCost: '1,97€ al día',
-    dailyText: 'Menos que un café.',
+    dailyCost: '1,97€',
+    dailyText: 'al día',
     features: [
       'Recepcionista IA · WhatsApp 24/7',
       'Respuesta automática sobre tratamientos y precios',
       'Cualificación de pacientes entrantes'
     ],
-    result: 'Cada paciente que escribe recibe respuesta al instante. Su clínica nunca duerme.',
     recommended: false
   },
   {
     name: 'Crecimiento',
-    description: 'Además de responder, ahora agenda, reduce ausencias y recupera pacientes dormidos automáticamente.',
     originalPrice: '1.750€/mes',
     price: '249€/mes',
     savings: '1.501€/mes',
-    dailyCost: '8,30€ al día',
-    dailyText: 'Un solo paciente recuperado lo cubre.',
+    dailyCost: '8,30€',
+    dailyText: 'al día',
     features: [
       'Todo lo de Inicio',
       'Reservas automatizadas por WhatsApp',
       'Recordatorios de citas automatizados',
       'Reactivación de pacientes inactivos'
     ],
-    result: 'Su clínica agenda sola, reduce no-shows y recupera pacientes que llevaban meses sin venir. Los ingresos crecen sin más inversión en captación.',
     recommended: true
   },
   {
     name: 'Escala',
-    description: 'Automatización completa. La clínica capta, convierte, retiene y se organiza sin fricción.',
     originalPrice: '2.050€/mes',
     price: '349€/mes',
     savings: '1.701€/mes',
-    dailyCost: '11,63€ al día',
-    dailyText: 'Una fracción de lo que pierde en no-shows.',
+    dailyCost: '11,63€',
+    dailyText: 'al día',
     features: [
       'Todo lo de Crecimiento',
       'Asistente personal del propietario',
       'Automatización de tareas y organización interna'
     ],
-    result: 'Eficiencia de cadena, personalización de consulta boutique. Recupera horas para ejercer, formar equipo o abrir una segunda sede.',
     recommended: false
   }
 ];
@@ -76,7 +69,7 @@ export default function PricingPlans() {
   }, []);
 
   return (
-    <section ref={containerRef} className="scroll-reveal py-20 md:py-32 px-4">
+    <section ref={containerRef} className="scroll-reveal py-12 md:py-20 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-16 md:mb-24 text-center">
@@ -86,7 +79,7 @@ export default function PricingPlans() {
             <br />
             Impacto máximo.
           </h2>
-          <p className="text-lg text-[#b0b0b5] max-w-2xl mx-auto">
+          <p className="text-lg text-[#a0a0a5] max-w-2xl mx-auto">
             Un sistema que paga su propia inversión en las primeras semanas.
           </p>
         </div>
@@ -111,28 +104,25 @@ export default function PricingPlans() {
                 </div>
               )}
 
-              <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-2xl md:text-3xl font-semibold mb-3">
+              <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-2xl md:text-3xl font-semibold mb-8">
                 {plan.name}
               </h3>
-              <p className="text-[#b0b0b5] text-sm md:text-base mb-6 leading-relaxed">
-                {plan.description}
-              </p>
 
               {/* Pricing */}
               <div className="mb-8 text-center">
-                <div className="flex items-baseline justify-center gap-2 mb-2">
+                <div className="flex items-baseline justify-center gap-2 mb-3">
                   <span className="text-[#636366] line-through text-sm">
                     {plan.originalPrice}
                   </span>
                 </div>
-                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-4xl md:text-5xl font-bold text-white mb-2">
-                  <AnimatedCounter value={parseInt(plan.price)} prefix="" suffix="€/mes" />
+                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-5xl md:text-6xl font-bold text-white mb-3">
+                  {plan.price}
                 </div>
                 <div className="savings-pill mb-4 justify-center flex">
                   Ahorro: {plan.savings}
                 </div>
-                <p className="text-[#b0b0b5] text-sm">
-                  Son <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="font-semibold text-white">{plan.dailyCost}</span>. {plan.dailyText}
+                <p className="text-[#8e8e93] text-sm">
+                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="font-semibold text-[#f5f5f5]">{plan.dailyCost}</span> {plan.dailyText}
                 </p>
               </div>
 
@@ -142,16 +132,13 @@ export default function PricingPlans() {
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start gap-3 justify-center">
                       <span className="text-[#34c759] font-bold mt-0.5">✓</span>
-                      <span className="text-[#b0b0b5] text-sm">{feature}</span>
+                      <span className="text-[#a0a0a5] text-sm">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Result */}
-              <p className="text-[#b0b0b5] text-sm leading-relaxed mb-8">
-                <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="font-semibold text-white">Resultado:</span> {plan.result}
-              </p>
+
 
               {/* CTA */}
               <button
