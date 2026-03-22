@@ -1,25 +1,35 @@
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
+import Hero from '@/components/Hero';
+import StatsBar from '@/components/StatsBar';
+import ValueAudit from '@/components/ValueAudit';
+import Installation from '@/components/Installation';
+import PricingPlans from '@/components/PricingPlans';
+import SalesScript from '@/components/SalesScript';
+import FreeTrial from '@/components/FreeTrial';
+import FinalCTA from '@/components/FinalCTA';
+import Footer from '@/components/Footer';
 
 /**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
+ * Kinetic Ops Landing Page
+ * 
+ * Design Philosophy: Minimalist, Tesla/Apple-inspired dark mode
+ * - Radical visual hierarchy with large numbers and ample whitespace
+ * - Premium typography: Plus Jakarta Sans (display), Newsreader (narrative), IBM Plex Mono (technical)
+ * - Red accent (#e82127) for critical CTAs and highlights
+ * - Scroll reveal animations with fade-up effect
+ * - Subtle borders and depth without clutter
  */
 export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
+    <div className="min-h-screen bg-black text-white">
+      <Hero />
+      <StatsBar />
+      <ValueAudit />
+      <Installation />
+      <PricingPlans />
+      <SalesScript />
+      <FreeTrial />
+      <FinalCTA />
+      <Footer />
     </div>
   );
 }
