@@ -40,7 +40,7 @@ export default function FreeTrial() {
   }, []);
 
   return (
-    <section ref={containerRef} className="scroll-reveal py-20 md:py-32 px-4">
+    <section ref={containerRef} className="scroll-reveal py-20 md:py-32 px-4 bg-black">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-16 md:mb-24 text-center">
@@ -50,8 +50,10 @@ export default function FreeTrial() {
             <br />
             Resultados reales.
           </h2>
-          <p className="text-lg text-[#b0b0b5] max-w-2xl mx-auto">
-            Instalamos todo el sistema de su plan. Si en una semana no ve impacto con sus propios datos, desinstalamos sin coste.
+          <p className="text-lg text-[#b0b0b5] max-w-2xl mx-auto leading-relaxed">
+            Instalamos todo el sistema de su plan.
+            <br />
+            Si en una semana no ve impacto con sus propios datos, desinstalamos sin coste.
           </p>
         </div>
 
@@ -72,12 +74,7 @@ export default function FreeTrial() {
           ))}
         </div>
 
-        {/* Closing statement */}
-        <div className="text-center p-8 md:p-12 bg-[#0a0a0a] border border-[rgba(255,255,255,0.07)] rounded-2xl">
-          <p className="text-lg text-[#34c759] font-medium">
-            El objetivo no es convencerle. Es que vea con sus propios números lo que estaba dejando escapar.
-          </p>
-        </div>
+
       </div>
     </section>
   );

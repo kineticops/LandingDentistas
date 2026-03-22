@@ -49,10 +49,10 @@ export default function Hero() {
         </div>
 
         {/* Main headline */}
-        <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-5xl md:text-7xl lg:text-8xl font-800 leading-tight mb-6">
+        <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-6xl md:text-7xl font-bold leading-tight mb-6">
           Menos gestión.
           <br />
-          Más <span className="text-[#e82127]">ingresos</span>.
+          Más <span className="gradient-text">ingresos</span>.
         </h1>
 
         {/* Subtitle */}

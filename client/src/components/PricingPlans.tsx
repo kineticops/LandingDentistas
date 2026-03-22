@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import ContactModal from './ContactModal';
+import AnimatedCounter from './AnimatedCounter';
 
 const plans = [
   {
@@ -118,16 +119,16 @@ export default function PricingPlans() {
               </p>
 
               {/* Pricing */}
-              <div className="mb-8">
-                <div className="flex items-baseline gap-2 mb-2">
+              <div className="mb-8 text-center">
+                <div className="flex items-baseline justify-center gap-2 mb-2">
                   <span className="text-[#636366] line-through text-sm">
                     {plan.originalPrice}
                   </span>
                 </div>
                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-4xl md:text-5xl font-bold text-white mb-2">
-                  {plan.price}
+                  <AnimatedCounter value={parseInt(plan.price)} prefix="" suffix="€/mes" />
                 </div>
-                <div className="savings-pill mb-4">
+                <div className="savings-pill mb-4 justify-center flex">
                   Ahorro: {plan.savings}
                 </div>
                 <p className="text-[#b0b0b5] text-sm">
@@ -137,9 +138,9 @@ export default function PricingPlans() {
 
               {/* Features */}
               <div className="mb-8 pb-8 border-b border-[rgba(255,255,255,0.07)]">
-                <ul className="space-y-3">
+                <ul className="space-y-3 text-center">
                   {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3">
+                    <li key={i} className="flex items-start gap-3 justify-center">
                       <span className="text-[#34c759] font-bold mt-0.5">✓</span>
                       <span className="text-[#b0b0b5] text-sm">{feature}</span>
                     </li>

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import AnimatedCounter from './AnimatedCounter';
 
 const systems = [
   {
@@ -97,7 +98,7 @@ export default function ValueAudit() {
                 </div>
                 <div className="flex-shrink-0 md:text-right">
                   <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }} className="text-2xl md:text-3xl font-bold text-[#e82127]">
-                    {system.value}
+                    <AnimatedCounter value={parseInt(system.value)} prefix="" suffix="€/mes" />
                   </p>
                 </div>
               </div>
