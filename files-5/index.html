@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinetic Ops — IA para Clínicas Dentales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#000;
+  --border:rgba(255,255,255,0.08);
+  --border-hover:rgba(255,255,255,0.18);
+  --text-primary:#f5f5f7;
+  --text-secondary:#a1a1a6;
+  --text-tertiary:#86868b;
+  --text-hint:#636366;
+  --red:#e82127;
+  --red-soft:rgba(232,33,39,0.12);
+  --green:#30d158;
+  --green-soft:rgba(48,209,88,0.12);
+  --amber:#ff9f0a;
+  --amber-soft:rgba(255,159,10,0.12);
+  --blue:#0a84ff;
+  --blue-soft:rgba(10,132,255,0.12);
+  --font:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:var(--font);background:var(--bg);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;border:none;cursor:pointer}
+
+/* ── Layout — reduced spacing ── */
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+@media(min-width:768px){.container{padding:0 48px}}
+@media(min-width:1200px){.container{padding:0 24px}}
+section{padding:64px 0;background:var(--bg)}
+@media(min-width:768px){section{padding:80px 0}}
+
+/* ── Typography ── */
+.headline-xl{font-size:clamp(40px,7vw,72px);font-weight:800;line-height:1.05;letter-spacing:-.03em}
+.headline-lg{font-size:clamp(32px,5vw,56px);font-weight:700;line-height:1.08;letter-spacing:-.025em}
+.headline-md{font-size:clamp(22px,3vw,32px);font-weight:600;line-height:1.2;letter-spacing:-.015em}
+.body-lg{font-size:clamp(16px,1.8vw,19px);line-height:1.65;color:var(--text-secondary)}
+.body-sm{font-size:14px;line-height:1.6;color:var(--text-secondary)}
+
+/* ── CTA ── */
+.cta-primary{display:inline-flex;align-items:center;gap:10px;padding:17px 40px;background:var(--red);color:#fff;font-size:16px;font-weight:600;border-radius:980px;letter-spacing:-.01em;transition:all .3s cubic-bezier(.25,.1,.25,1);border:2px solid var(--red)}
+.cta-primary:hover{background:transparent;color:var(--red);transform:scale(1.03)}
+.cta-primary svg{transition:transform .3s ease}
+.cta-primary:hover svg{transform:translateX(3px)}
+
+/* ── Reveal ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.25,.1,.25,1),transform .7s cubic-bezier(.25,.1,.25,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+
+/* ── Nav ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 0;background:rgba(0,0,0,.72);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--red)}
+.nav-brand{font-size:15px;font-weight:800;letter-spacing:-.02em}
+.nav-cta{padding:10px 24px;background:var(--red);color:#fff;font-size:13px;font-weight:600;border-radius:980px;transition:all .3s ease;border:1.5px solid var(--red)}
+.nav-cta:hover{background:transparent;color:var(--red)}
+
+/* ── Hero ── */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding-top:80px;position:relative;background:var(--bg)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(232,33,39,.06) 0%,transparent 70%);pointer-events:none}
+.hero-content{position:relative;z-index:1;max-width:800px;padding:0 16px}
+.hero .headline-xl{margin-bottom:24px}
+.hero .body-lg{max-width:600px;margin:0 auto 48px}
+.no-orphan{white-space:nowrap}
+.scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:float 2.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* ── Stats ── */
+.stats{padding:56px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg)}
+.stats-grid{display:grid;grid-template-columns:1fr;gap:48px;text-align:center}
+@media(min-width:768px){.stats-grid{grid-template-columns:repeat(3,1fr);gap:0}.stats-grid>div:not(:last-child){border-right:1px solid var(--border)}}
+.stat-number{font-size:clamp(40px,6vw,64px);font-weight:800;letter-spacing:-.03em;color:var(--red);line-height:1;margin-bottom:12px}
+.stat-text{font-size:15px;color:var(--text-secondary);max-width:220px;margin:0 auto;line-height:1.5}
+
+/* ── Section Header — no eyebrow ── */
+.section-header{text-align:center;margin-bottom:48px}
+@media(min-width:768px){.section-header{margin-bottom:64px}}
+.section-header .body-lg{margin-top:16px;max-width:540px;margin-left:auto;margin-right:auto}
+
+/* ── Audit Cards ── */
+.audit-card{
+  display:flex;flex-direction:column;gap:16px;
+  padding:28px 24px;
+  border:1px solid var(--border);border-radius:16px;
+  transition:all .35s cubic-bezier(.25,.1,.25,1);
+  margin-bottom:12px;
+  text-align:center;
+}
+@media(min-width:768px){.audit-card{padding:32px 36px}}
+.audit-card:hover{border-color:var(--border-hover);background:rgba(255,255,255,0.02)}
+
+.audit-tag{display:inline-block;padding:4px 12px;border-radius:980px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.tag-capture{background:var(--amber-soft);color:var(--amber)}
+.tag-conversion{background:var(--red-soft);color:var(--red)}
+.tag-retention{background:var(--green-soft);color:var(--green)}
+.tag-operative{background:var(--blue-soft);color:var(--blue)}
+
+.audit-name{font-size:clamp(18px,2.2vw,22px);font-weight:600;margin-bottom:6px;letter-spacing:-.01em}
+.audit-desc{font-size:14px;color:var(--text-secondary);line-height:1.6;max-width:580px;margin:0 auto 16px}
+
+.audit-pricing{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.audit-price-old{font-size:18px;font-weight:600;color:var(--text-hint);text-decoration:line-through}
+.audit-price-new{font-size:22px;font-weight:700;color:var(--green)}
+
+/* ── Installation — crossed price + green free ── */
+.installation-box{border:1px solid var(--border);border-radius:20px;padding:48px 32px;text-align:center}
+@media(min-width:768px){.installation-box{padding:56px 48px}}
+.install-pricing{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:20px;flex-wrap:wrap}
+.install-price-old{font-size:clamp(28px,4vw,40px);font-weight:800;color:var(--text-hint);letter-spacing:-.03em;text-decoration:line-through}
+.install-price-new{font-size:clamp(32px,4.5vw,44px);font-weight:800;color:var(--green);letter-spacing:-.03em}
+.install-note{font-size:12px;font-weight:600;color:var(--text-tertiary);letter-spacing:.1em;text-transform:uppercase;margin-top:8px}
+
+/* ── Tiers ── */
+.tier-item{text-align:center;padding:32px 24px;border-bottom:1px solid var(--border)}
+.tier-item:last-child{border-bottom:none}
+.tier-number{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:1.5px solid var(--red);color:var(--red);font-size:13px;font-weight:700;margin-bottom:16px}
+.tier-name{font-size:clamp(24px,3vw,32px);font-weight:700;margin-bottom:12px;letter-spacing:-.02em}
+.tier-desc{font-size:16px;color:var(--text-secondary);line-height:1.7;max-width:560px;margin:0 auto}
+
+/* ── Pricing Cards ── */
+.pricing-grid{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:768px){.pricing-grid{grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}}
+
+.plan-card{
+  background:rgba(255,255,255,0.02);
+  border:1px solid var(--border);border-radius:20px;
+  padding:36px 28px;
+  display:flex;flex-direction:column;
+  position:relative;
+  transition:all .35s cubic-bezier(.25,.1,.25,1);
+  text-align:center;
+}
+.plan-card:hover{border-color:var(--border-hover);transform:translateY(-4px)}
+.plan-card.recommended{border-color:var(--red);border-width:2px}
+
+.plan-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);padding:5px 16px;background:var(--red);color:#fff;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:980px;white-space:nowrap}
+
+.plan-name{font-size:24px;font-weight:700;margin-bottom:24px;letter-spacing:-.02em}
+
+.plan-pricing{text-align:center;margin-bottom:28px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.plan-original{font-size:14px;color:var(--text-hint);text-decoration:line-through;margin-bottom:8px;min-height:20px}
+.plan-price{font-size:clamp(44px,5vw,52px);font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:4px}
+.plan-per{font-size:14px;font-weight:500;color:var(--text-tertiary);margin-bottom:12px}
+.plan-savings{display:inline-block;padding:4px 14px;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:600;border-radius:980px;margin-bottom:10px}
+.plan-daily{font-size:13px;color:var(--text-tertiary)}
+.plan-daily strong{color:var(--text-primary);font-weight:600}
+
+.plan-features{border-top:1px solid var(--border);padding-top:24px;margin-bottom:28px;flex:1}
+.plan-feature{display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:18px;text-align:center}
+.plan-feature:last-child{margin-bottom:0}
+.plan-feature-name{font-size:14px;color:var(--text-secondary);line-height:1.4}
+.plan-feature-pricing{display:flex;align-items:center;gap:8px;justify-content:center}
+.plan-feature-old{font-size:12px;color:var(--text-hint);text-decoration:line-through}
+.plan-feature-new{font-size:13px;font-weight:600;color:var(--green)}
+.plan-feature-check{color:var(--green);font-weight:700;font-size:14px}
+.plan-feature-inherited{font-size:14px;color:var(--text-secondary);margin-bottom:18px;display:flex;align-items:center;gap:8px;justify-content:center}
+
+.plan-cta{width:100%;padding:14px 24px;background:transparent;color:var(--text-primary);font-size:14px;font-weight:600;border:1.5px solid var(--border);border-radius:980px;transition:all .3s ease}
+.plan-cta:hover{border-color:var(--red);color:var(--red)}
+.plan-card.recommended .plan-cta{background:var(--red);color:#fff;border-color:var(--red)}
+.plan-card.recommended .plan-cta:hover{background:transparent;color:var(--red)}
+
+/* ── Social Proof ── */
+.social-proof{padding:56px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg)}
+.social-inner{display:flex;flex-direction:column;align-items:center;gap:32px;text-align:center}
+@media(min-width:768px){.social-inner{flex-direction:row;justify-content:center;gap:64px}}
+.social-number{font-size:clamp(48px,6vw,64px);font-weight:800;color:var(--red);letter-spacing:-.03em;line-height:1}
+.social-divider{display:none}
+@media(min-width:768px){.social-divider{display:block;width:1px;height:64px;background:var(--border)}}
+.social-highlight{font-size:18px;font-weight:600;color:var(--green)}
+
+/* ── Testimonials ── */
+.testimonials-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:768px){.testimonials-grid{grid-template-columns:repeat(3,1fr)}}
+.testimonial-card{border:1px solid var(--border);border-radius:20px;padding:32px 28px;transition:all .35s ease;background:rgba(255,255,255,0.02);text-align:center}
+.testimonial-card:hover{border-color:var(--border-hover);transform:translateY(-4px)}
+.testimonial-quote{font-size:20px;font-weight:700;color:var(--red);line-height:1.3;margin-bottom:20px}
+.testimonial-author{font-size:15px;font-weight:600;margin-bottom:2px}
+.testimonial-clinic{font-size:13px;color:var(--text-tertiary);margin-bottom:16px}
+.testimonial-result{padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--green);line-height:1.5}
+
+/* ── Trial ── */
+.trial-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:768px){.trial-grid{grid-template-columns:repeat(2,1fr)}}
+.trial-card{border:1px solid var(--border);border-radius:20px;padding:32px 28px;transition:all .35s ease;background:rgba(255,255,255,0.02);text-align:center}
+.trial-card:hover{border-color:var(--border-hover)}
+.trial-card h4{font-size:18px;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
+.trial-card p{font-size:14px;color:var(--text-secondary);line-height:1.6}
+
+/* ── Final CTA ── */
+.final-cta{text-align:center;position:relative;background:var(--bg)}
+.final-cta::before{content:'';position:absolute;bottom:0;left:0;right:0;height:60%;background:radial-gradient(ellipse 60% 80% at 50% 100%,rgba(232,33,39,.05) 0%,transparent 70%);pointer-events:none}
+.final-cta .body-lg{max-width:580px;margin:0 auto}
+
+/* ── Footer ── */
+.footer{padding:48px 0;border-top:1px solid var(--border);text-align:center;background:var(--bg)}
+.footer-brand{font-size:15px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.footer-copy{font-size:11px;color:var(--text-tertiary)}
+
+/* ── Modal ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;z-index:200;padding:24px;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-box{background:#0a0a0a;border:1px solid var(--border);border-radius:20px;padding:40px 32px;max-width:440px;width:100%;position:relative;transform:scale(.95) translateY(10px);transition:transform .3s cubic-bezier(.25,.1,.25,1)}
+.modal-overlay.active .modal-box{transform:scale(1) translateY(0)}
+.modal-close{position:absolute;top:20px;right:20px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;color:var(--text-tertiary);font-size:20px;border-radius:50%;transition:all .2s ease}
+.modal-close:hover{background:rgba(255,255,255,.06);color:var(--text-primary)}
+.modal-title{font-size:28px;font-weight:700;margin-bottom:6px;letter-spacing:-.02em}
+.modal-sub{font-size:14px;color:var(--text-secondary);margin-bottom:28px}
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:6px}
+.form-input{width:100%;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;color:var(--text-primary);font-family:var(--font);font-size:15px;transition:border-color .2s ease;outline:none}
+.form-input::placeholder{color:var(--text-hint)}
+.form-input:focus{border-color:var(--red)}
+.form-submit{width:100%;margin-top:8px;padding:14px 24px;background:var(--red);color:#fff;font-size:15px;font-weight:600;border-radius:980px;border:2px solid var(--red);transition:all .3s ease}
+.form-submit:hover{background:transparent;color:var(--red)}
+.form-footer{text-align:center;margin-top:16px;font-size:12px;font-weight:500;color:var(--text-tertiary);letter-spacing:.02em}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <div class="nav-logo">
+      <div class="nav-dot"></div>
+      <span class="nav-brand">Kinetic Ops</span>
+    </div>
+    <button class="nav-cta" onclick="openModal()">Prueba 7 días gratis</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-content reveal">
+    <h1 class="headline-xl">
+      Menos gestión.<br>
+      Más <span style="color:var(--red)">ingresos</span>.
+    </h1>
+    <p class="body-lg">
+      Sistemas de IA que trabajan por su clínica las 24&nbsp;horas.<br>
+      Para clínicas que no pueden permitirse perder <span class="no-orphan">ni un paciente más.</span>
+    </p>
+    <button class="cta-primary" onclick="openModal()">
+      Probar 7 días gratis
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+  <div class="scroll-hint">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats" id="stats">
+  <div class="container">
+    <div class="stats-grid reveal">
+      <div>
+        <div class="stat-number">73%</div>
+        <p class="stat-text">de leads se pierden por respuesta lenta</p>
+      </div>
+      <div>
+        <div class="stat-number">15–30%</div>
+        <p class="stat-text">de citas se pierden por no-shows evitables</p>
+      </div>
+      <div>
+        <div class="stat-number">24/7</div>
+        <p class="stat-text">su clínica responde sin que usted esté</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIT -->
+<section id="audit">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="headline-lg">Cada cita perdida cuesta<br>entre 80€ y 300€.</h2>
+      <p class="body-lg" style="margin-top:16px;">Cada sistema se valora por su impacto directo<br>en su facturación mensual.</p>
+    </div>
+
+    <div class="reveal reveal-delay-1">
+      <div class="audit-card">
+        <span class="audit-tag tag-capture">CAPTACIÓN</span>
+        <h3 class="audit-name">Reservas automatizadas · WhatsApp</h3>
+        <p class="audit-desc">El paciente solicita cita por WhatsApp y el sistema la agenda según disponibilidad real. Sin llamadas, sin esperas. Una clínica media pierde 5–10 citas semanales por fricción.</p>
+        <div class="audit-pricing">
+          <span class="audit-price-old">450€/mes</span>
+          <span class="audit-price-new">Incluido en tu plan</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-1">
+      <div class="audit-card">
+        <span class="audit-tag tag-conversion">CONVERSIÓN</span>
+        <h3 class="audit-name">Recepcionista IA · WhatsApp 24/7</h3>
+        <p class="audit-desc">Atención automática: tratamientos, precios orientativos, preparación previa. Cualifica pacientes antes de consulta. Reduce carga administrativa entre un 50% y un 70%.</p>
+        <div class="audit-pricing">
+          <span class="audit-price-old">500€/mes</span>
+          <span class="audit-price-new">Incluido en tu plan</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <div class="audit-card">
+        <span class="audit-tag tag-conversion">CONVERSIÓN</span>
+        <h3 class="audit-name">Recordatorios de citas automatizados</h3>
+        <p class="audit-desc">Notificaciones con confirmación interactiva. Reducir los no-shows un 40% puede representar más de 1.500€/mes en facturación recuperada.</p>
+        <div class="audit-pricing">
+          <span class="audit-price-old">350€/mes</span>
+          <span class="audit-price-new">Incluido en tu plan</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <div class="audit-card">
+        <span class="audit-tag tag-retention">RETENCIÓN</span>
+        <h3 class="audit-name">Reactivación de pacientes inactivos</h3>
+        <p class="audit-desc">Detecta pacientes que llevan meses sin visitar y ejecuta secuencias automáticas. Recuperar un solo paciente puede generar entre 150€ y 800€.</p>
+        <div class="audit-pricing">
+          <span class="audit-price-old">450€/mes</span>
+          <span class="audit-price-new">Incluido en tu plan</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-3">
+      <div class="audit-card">
+        <span class="audit-tag tag-operative">OPERATIVO</span>
+        <h3 class="audit-name">Asistente personal del propietario</h3>
+        <p class="audit-desc">Automatiza tareas internas. Libera 5–8h semanales. Para un odontólogo cuya hora vale 80–150€, esto equivale a 1.600–4.800€/mes en tiempo recuperado.</p>
+        <div class="audit-pricing">
+          <span class="audit-price-old">300€/mes</span>
+          <span class="audit-price-new">Incluido en tu plan</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALLATION — crossed price + green Gratuita -->
+<section id="installation" style="padding:48px 0;background:var(--bg);">
+  <div class="container">
+    <div class="installation-box reveal">
+      <h3 class="headline-md">Instalación profesional</h3>
+      <p class="body-sm" style="max-width:400px;margin:8px auto 0;">Configuración, integraciones, personalización y formación.</p>
+      <div class="install-pricing">
+        <span class="install-price-old">197€ – 497€</span>
+        <span class="install-price-new">Gratuita</span>
+      </div>
+      </div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section id="tiers">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="headline-lg">Resultado por nivel.</h2>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="tier-item">
+        <div class="tier-number">1</div>
+        <h3 class="tier-name">Inicio</h3>
+        <p class="tier-desc">Su clínica deja de perder pacientes por silencio. Cada mensaje recibe respuesta inmediata, cada consulta se atiende al instante. Usted duerme, su clínica no.</p>
+      </div>
+      <div class="tier-item">
+        <div class="tier-number">2</div>
+        <h3 class="tier-name">Crecimiento</h3>
+        <p class="tier-desc">Las citas se agendan solas. Los no-shows se reducen antes de que ocurran. Los pacientes que llevaban meses sin venir reciben un motivo para volver. Sus ingresos crecen sin que usted invierta más en captación.</p>
+      </div>
+      <div class="tier-item">
+        <div class="tier-number">3</div>
+        <h3 class="tier-name">Escala</h3>
+        <p class="tier-desc">Opera con la eficiencia de una cadena y la cercanía de una consulta boutique. Recupera entre 5 y 8 horas semanales para lo que importa: ejercer, formar equipo o abrir su segunda sede.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="headline-lg">Inversión mínima.<br>Impacto máximo.</h2>
+      <p class="body-lg">Un sistema que paga su propia inversión<br>en las primeras semanas.</p>
+    </div>
+
+    <div class="pricing-grid reveal reveal-delay-1">
+
+      <!-- INICIO -->
+      <div class="plan-card">
+        <h3 class="plan-name">Inicio</h3>
+        <div class="plan-pricing">
+          <p class="plan-original">500€/mes</p>
+          <p class="plan-price">59€</p>
+          <p class="plan-per">/mes</p>
+          <span class="plan-savings">Ahorro: 441€/mes</span>
+          <p class="plan-daily"><strong>1,97€</strong> al día</p>
+        </div>
+        <div class="plan-features">
+          <div class="plan-feature">
+            <span class="plan-feature-name">Recepcionista IA · WhatsApp 24/7</span>
+            <div class="plan-feature-pricing">
+              <span class="plan-feature-old">500€/mes</span>
+              <span class="plan-feature-new">→ incluido</span>
+            </div>
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-name">Respuesta automática sobre tratamientos y precios</span>
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-name">Cualificación de pacientes entrantes</span>
+          </div>
+        </div>
+        <button class="plan-cta" onclick="openModal()">Probar 7 días gratis</button>
+      </div>
+
+      <!-- CRECIMIENTO -->
+      <div class="plan-card recommended">
+        <div class="plan-badge">RECOMENDADO</div>
+        <h3 class="plan-name">Crecimiento</h3>
+        <div class="plan-pricing">
+          <p class="plan-original">1.750€/mes</p>
+          <p class="plan-price">249€</p>
+          <p class="plan-per">/mes</p>
+          <span class="plan-savings">Ahorro: 1.501€/mes</span>
+          <p class="plan-daily"><strong>8,30€</strong> al día</p>
+        </div>
+        <div class="plan-features">
+          <div class="plan-feature-inherited">
+            <span class="plan-feature-check">✓</span>
+            <span>Todo lo de Inicio</span>
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-name">Reservas automatizadas · WhatsApp</span>
+            <div class="plan-feature-pricing">
+              <span class="plan-feature-old">450€/mes</span>
+              <span class="plan-feature-new">→ incluido</span>
+            </div>
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-name">Recordatorios de citas automatizados</span>
+            <div class="plan-feature-pricing">
+              <span class="plan-feature-old">350€/mes</span>
+              <span class="plan-feature-new">→ incluido</span>
+            </div>
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-name">Reactivación de pacientes inactivos</span>
+            <div class="plan-feature-pricing">
+              <span class="plan-feature-old">450€/mes</span>
+              <span class="plan-feature-new">→ incluido</span>
+            </div>
+          </div>
+        </div>
+        <button class="plan-cta" onclick="openModal()">Probar 7 días gratis</button>
+      </div>
+
+      <!-- ESCALA -->
+      <div class="plan-card">
+        <h3 class="plan-name">Escala</h3>
+        <div class="plan-pricing">
+          <p class="plan-original">2.050€/mes</p>
+          <p class="plan-price">349€</p>
+          <p class="plan-per">/mes</p>
+          <span class="plan-savings">Ahorro: 1.701€/mes</span>
+          <p class="plan-daily"><strong>11,63€</strong> al día</p>
+        </div>
+        <div class="plan-features">
+          <div class="plan-feature-inherited">
+            <span class="plan-feature-check">✓</span>
+            <span>Todo lo de Crecimiento</span>
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-name">Asistente personal del propietario</span>
+            <div class="plan-feature-pricing">
+              <span class="plan-feature-old">300€/mes</span>
+              <span class="plan-feature-new">→ incluido</span>
+            </div>
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-name">Automatización de tareas y organización interna</span>
+          </div>
+        </div>
+        <button class="plan-cta" onclick="openModal()">Probar 7 días gratis</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="social-proof reveal">
+  <div class="container">
+    <div class="social-inner">
+      <div>
+        <div class="social-number">+150</div>
+        <p class="stat-text" style="margin-top:8px;">clínicas confían en Kinetic Ops</p>
+      </div>
+      <div class="social-divider"></div>
+      <div>
+        <p class="social-highlight">+2.500 horas recuperadas</p>
+        <p class="body-sm" style="margin-top:4px;">en gestión administrativa</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="headline-lg">Clínicas que ya confían en nosotros</h2>
+    </div>
+    <div class="testimonials-grid reveal reveal-delay-1">
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"+35% citas confirmadas en 30 días"</p>
+        <p class="testimonial-author">Dr. Miguel Rodríguez</p>
+        <p class="testimonial-clinic">Clínica Dental Rodríguez, Madrid</p>
+        <p class="testimonial-result"><strong>Resultado:</strong> Recuperó 2.100€ mensuales en citas que antes se perdían</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"Recepción liberada de tareas repetitivas"</p>
+        <p class="testimonial-author">Dra. Carmen López</p>
+        <p class="testimonial-clinic">Centro Odontológico López, Barcelona</p>
+        <p class="testimonial-result"><strong>Resultado:</strong> Su equipo ahora se enfoca en pacientes, no en llamadas</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"18 pacientes reactivados en 3 semanas"</p>
+        <p class="testimonial-author">Dr. Antonio Martínez</p>
+        <p class="testimonial-clinic">Clínica Dental Martínez, Valencia</p>
+        <p class="testimonial-result"><strong>Resultado:</strong> Facturación adicional: 3.600€ sin inversión en marketing</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE TRIAL -->
+<section id="trial">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="headline-lg">7 días. 0€.<br>Resultados reales.</h2>
+      <p class="body-lg">Instalamos todo el sistema de su plan. Si en una semana no ve impacto con sus propios datos, desinstalamos sin coste.</p>
+    </div>
+    <div class="trial-grid reveal reveal-delay-1">
+      <div class="trial-card">
+        <h4>Instalación completa</h4>
+        <p>No es una demo. Configuramos todo exactamente como funcionará en producción.</p>
+      </div>
+      <div class="trial-card">
+        <h4>Sus datos, no los nuestros</h4>
+        <p>Verá leads respondidos, citas agendadas y ausencias evitadas con sus números reales.</p>
+      </div>
+      <div class="trial-card">
+        <h4>Sin permanencia</h4>
+        <p>Sin contrato. Sin penalización. Si no continúa, desinstalamos y no debe nada.</p>
+      </div>
+      <div class="trial-card">
+        <h4>Impacto en 72h</h4>
+        <p>La mayoría de clínicas ven el primer resultado antes de que acaben los 3 primeros días.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="final">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="reveal">
+      <h2 class="headline-lg">Mientras otros gestionan,<br>usted <span style="color:var(--red)">lidera</span>.</h2>
+      <p class="body-lg" style="margin-top:20px;">15 minutos.<br>Sin compromiso.<br><span class="no-orphan">Hablemos sobre el futuro de su clínica.</span></p>
+      <button class="cta-primary" onclick="openModal()" style="margin-top:40px;">
+        Probar 7 días gratis
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <p class="footer-brand">Kinetic Ops</p>
+    <p class="footer-copy">Todos los derechos reservados · 2026</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2 class="modal-title">Empezar prueba gratuita</h2>
+    <p class="modal-sub">Le contactamos para configurar sus 7 días de prueba sin coste.</p>
+    <div>
+      <div class="form-group"><label class="form-label">Nombre completo</label><input class="form-input" type="text" placeholder="Dr. Juan García" id="fname"></div>
+      <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="juan@clinica.com" id="femail"></div>
+      <div class="form-group"><label class="form-label">Teléfono</label><input class="form-input" type="tel" placeholder="+34 612 345 678" id="fphone"></div>
+      <div class="form-group"><label class="form-label">Nombre de la clínica</label><input class="form-input" type="text" placeholder="Clínica Dental García" id="fclinic"></div>
+      <button class="form-submit" onclick="submitForm()">Solicitar prueba gratuita</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const observer=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add('visible')})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(e=>observer.observe(e));
+function openModal(){document.getElementById('contactModal').classList.add('active');document.body.style.overflow='hidden'}
+function closeModal(){document.getElementById('contactModal').classList.remove('active');document.body.style.overflow=''}
+document.getElementById('contactModal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+function submitForm(){
+  const n=document.getElementById('fname').value,e=document.getElementById('femail').value,p=document.getElementById('fphone').value,c=document.getElementById('fclinic').value;
+  if(!n||!e||!p||!c){alert('Por favor, complete todos los campos.');return}
+  const b=`Nuevo contacto - Prueba Gratuita Kinetic Ops:\n\nNombre: ${n}\nEmail: ${e}\nTeléfono: ${p}\nClínica: ${c}`;
+  window.location.href=`mailto:kineticopss@gmail.com?subject=${encodeURIComponent('Solicitud prueba gratuita - '+c)}&body=${encodeURIComponent(b)}`;
+  setTimeout(()=>{['fname','femail','fphone','fclinic'].forEach(id=>document.getElementById(id).value='');closeModal()},1000);
+}
+</script>
+</body>
+</html>
