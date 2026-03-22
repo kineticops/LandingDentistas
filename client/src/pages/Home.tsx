@@ -3,7 +3,6 @@ import StatsBar from '@/components/StatsBar';
 import ValueAudit from '@/components/ValueAudit';
 import Installation from '@/components/Installation';
 import PricingPlans from '@/components/PricingPlans';
-import SalesScript from '@/components/SalesScript';
 import FreeTrial from '@/components/FreeTrial';
 import FinalCTA from '@/components/FinalCTA';
 import Footer from '@/components/Footer';
@@ -17,6 +16,10 @@ import Footer from '@/components/Footer';
  * - Red accent (#e82127) for critical CTAs and highlights
  * - Scroll reveal animations with fade-up effect
  * - Subtle borders and depth without clutter
+ * 
+ * Sales Script Reference: The page structure follows a persuasion framework
+ * (see SALES_SCRIPT_REFERENCE.md) but the script itself is not displayed.
+ * The copy, hierarchy, and CTA placement are optimized for conversion.
  */
 export default function Home() {
   return (
@@ -26,7 +29,6 @@ export default function Home() {
       <ValueAudit />
       <Installation />
       <PricingPlans />
-      <SalesScript />
       <FreeTrial />
       <FinalCTA />
       <Footer />
